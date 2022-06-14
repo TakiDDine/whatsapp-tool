@@ -1,0 +1,96 @@
+{% extends "admin/new_layout.twig" %}
+
+{% block title 'إضافة مجموعة جديدة' %}
+
+{% block body %}
+	<div id="top" class="sa-app__body">
+		<div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
+			<div class="container container--max--xl">
+				<form method="post" action="{{path_for('admin.groups.store')}}" enctype='multipart/form-data'>
+					<div class="py-5">
+						<div class="row g-4 align-items-center">
+							<div class="col">
+								<nav class="mb-2" aria-label="breadcrumb">
+									<ol class="breadcrumb breadcrumb-sa-simple">
+										<li class="breadcrumb-item">
+											<a href="{{ path_for('admin.numbers.index') }}">الرئيسية</a>
+										</li>
+										<li class="breadcrumb-item">
+											<a href="{{ path_for('admin.numbers.index') }}">المجموعات</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">إضافة مجموعة جديدة</li>
+									</ol>
+								</nav>
+								<h1 class="h3 m-0">إضافة مجموعة جديدة</h1>
+							</div>
+							<div class="col-auto d-flex">
+								<button class="btn btn-primary">حفظ</button>
+							</div>
+						</div>
+					</div>
+					{% include "admin/elements/flash.twig" %}
+					<div class="sa-entity-layout" data-sa-container-query="{&quot;920&quot;:&quot;sa-entity-layout--size--md&quot;,&quot;1100&quot;:&quot;sa-entity-layout--size--lg&quot;}">
+						<div class="sa-entity-layout__body">
+							<div class="sa-entity-layout__main">
+								<div class="card">
+									<div class="card-body p-5">
+										<div class="mb-5">
+											<h2 class="mb-0 fs-exact-18">المعلومات الأساسية</h2>
+										</div>
+										<div class="mb-4">
+											<label for="form-category/name" class="form-label">إسم المجموعة</label>
+											<input type="text" name="name" class="form-control" id="form-category/name" required/>
+										</div>
+										<div class="mb-4 row__container">
+											<label for="form-category/phone" class="form-label">رقم الهاتف</label>
+											<div class="d-flex align-items-center">
+												<select required name="phones[]" class="form-select">
+													{% for number in numbers %}
+														<option value="{{ number.id }}">{{ number.name }} - {{ number.phone_number }}</option>
+													{% endfor %}
+												</select>
+												<button type="button" id="addPhoneRow" class="ms-2 btn btn-primary">+</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+
+{% block javascripts %}
+
+	{{ parent() }}
+
+	<script>
+
+		$('#addPhoneRow').on('click', e => {
+			e.preventDefault()
+
+			$('.row__container').append(`
+				<div class="d-flex align-items-center mt-4 row__item">
+					<select required name="phones[]" class="form-select">
+						{% for number in numbers %}
+							<option value="{{ number.id }}">{{ number.name }} - {{ number.phone_number }}</option>
+						{% endfor %}
+					</select>
+					<button type="button" class="removeRow ms-2 btn btn-danger">-</button>
+				</div>
+			`)
+		})
+
+		$(document).on('click', '.removeRow', function (e) {
+			e.preventDefault();
+			$(this).parents('.row__item').remove()
+		})
+
+	</script>
+
+{% endblock %}
