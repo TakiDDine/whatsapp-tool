@@ -2,12 +2,18 @@
 
 namespace App\Controllers;
 
+use App\Helpers\SimpleCSV;
+use App\Helpers\SimpleXLSX;
 use App\Models\Number;
+use Slim\Http\UploadedFile;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class NumberController extends Controller
 {
+    const SUPPORTED_FILES = ['xlsx', 'csv'];
+
+
     public function index($request, $response)
     {
         $numbers = Number::all();
@@ -73,5 +79,59 @@ class NumberController extends Controller
         $this->flashsuccess('تم حذف الرقم بنجاح');
 
         return $route;
+    }
+
+    public function upload($request, $response)
+    {
+        $uploadedFiles = $request->getUploadedFiles();
+        $uploadedFile = $uploadedFiles['file'];
+        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+        $route = $response->withRedirect($this->router->pathFor('admin.numbers.index'));
+
+        if (!in_array($extension, self::SUPPORTED_FILES)) {
+            return $route;
+        }
+
+        $filename = $this->moveUploadedFile(BASEPATH . '/public/uploads', $uploadedFile);
+
+        $filepath = BASEPATH . '/public/uploads/' . $filename;
+
+        if ($extension === self::SUPPORTED_FILES[0]) {
+            $rows = SimpleXLSX::parse($filepath)->rows();
+        }
+        else {
+            $rows = SimpleCSV::import($filename);
+        }
+
+        $numbers = [];
+
+        foreach ($rows as $key => $row) {
+            if ($key === 0) continue;
+
+            $numbers[] = [
+                'name' => $row[0],
+                'phone_number' => $row[1],
+            ];
+        }
+
+        Number::insert($numbers);
+
+        $this->flashsuccess('تم إضافة الرقم بنجاح');
+
+        // Delete the file
+        unlink($filepath);
+
+        return $route;
+    }
+
+    function moveUploadedFile($directory, UploadedFile $uploadedFile)
+    {
+        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+        $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+        $filename = sprintf('%s.%0.8s', $basename, $extension);
+
+        $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+
+        return $filename;
     }
 }

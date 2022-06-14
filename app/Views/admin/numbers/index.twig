@@ -20,7 +20,27 @@
 							<h1 class="h3 m-0">الأرقام</h1>
 						</div>
 						<div class="col-auto d-flex">
+							<a href="javascript:;" class="text-black-50" data-bs-toggle="modal" data-bs-target="#uploadModal">رفع الأرقام</a>
+						</div>
+						<div class="col-auto d-flex">
 							<a href="{{ path_for('admin.numbers.create') }}" class="btn btn-primary">إضافة رقم هاتف جديد</a>
+						</div>
+
+						<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" style="display: none;" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">رفع ملف الأرقام</h5>
+										<button type="button" class="sa-close sa-close--modal" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<form action="{{ path_for('admin.numbers.upload') }}" method="POST" enctype="multipart/form-data">
+											<input type="file" name="file" accept=".csv,.xlsx" required class="form-control">
+											<button class="btn btn-primary w-100 mt-4">رفع الملف</button>
+										</form>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

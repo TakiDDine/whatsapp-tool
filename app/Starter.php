@@ -87,15 +87,10 @@ class Starter
             return session_start();
         }
 
-        $cart_count = @$_SESSION['products_quantity'] > 0 ? ' (' . $_SESSION['products_quantity'] . ') ' : '';
-
         $container['view']->getEnvironment()->addGlobal('assets', $container['conf']['url.assets']);
         $container['view']->getEnvironment()->addGlobal('config', $container['conf']['app']);
         $container['view']->getEnvironment()->addGlobal('url', $container['conf']['url']);
         $container['view']->getEnvironment()->addGlobal('dir', $container['conf']['dir']);
-        $container['view']->getEnvironment()->addGlobal('ALLPRODUCTS', \App\Models\Product::all());
-        $container['view']->getEnvironment()->addGlobal('ALLCATEGORIES', \App\Models\ProductCategories::all('id', 'name', 'slug'));
-        $container['view']->getEnvironment()->addGlobal('count_cart', $cart_count);
     }
 
 
@@ -116,7 +111,7 @@ class Starter
             $container['view']->getEnvironment()->addGlobal('admin', $this->capsule->table('users')->find($_SESSION['auth-admin']));
         }
 
-        $container['view']->getEnvironment()->addGlobal('pages', $this->capsule->table('pages')->get());
+        // $container['view']->getEnvironment()->addGlobal('pages', $this->capsule->table('pages')->get());
     }
 
     public function memorySettings()

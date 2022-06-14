@@ -26,6 +26,8 @@ $app->group('/admin', function ($container) use ($app) {
     $this->get('/numbers/{id}/edit', 'Number:edit')->setName('admin.numbers.edit');
     $this->post('/numbers/{id}/update', 'Number:update')->setName('admin.numbers.update');
     $this->post('/numbers/{id}/delete', 'Number:delete')->setName('admin.numbers.delete');
+    $this->post('/numbers/upload', 'Number:upload')->setName('admin.numbers.upload');
+
 
     // Groups
     $this->get('/groups', 'Group:index')->setName('admin.groups.index');
