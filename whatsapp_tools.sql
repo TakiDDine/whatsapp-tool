@@ -37,10 +37,6 @@ CREATE TABLE `groups` (
 --
 -- Dumping data for table `groups`
 --
-
-INSERT INTO `groups` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'مجموعة الديفولبرز', '2022-06-14 14:07:56', '2022-06-14 14:07:56');
-
 -- --------------------------------------------------------
 
 --
@@ -53,14 +49,6 @@ CREATE TABLE `group_numbers` (
   `number_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `group_numbers`
---
-
-INSERT INTO `group_numbers` (`id`, `group_id`, `number_id`) VALUES
-(2, 2, 1),
-(3, 1, 1),
-(4, 1, 2);
 
 -- --------------------------------------------------------
 
