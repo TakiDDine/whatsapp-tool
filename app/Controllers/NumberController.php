@@ -13,6 +13,10 @@ class NumberController extends Controller
 {
     const SUPPORTED_FILES = ['xlsx', 'csv'];
 
+    private function cleanPhoneNumber($phone)
+    {
+        return trim(str_replace([" ", "-", "(", ")"], "", $phone));
+    }
 
     public function index($request, $response)
     {
@@ -33,7 +37,7 @@ class NumberController extends Controller
         $route = $response->withRedirect($this->router->pathFor('admin.numbers.index'));
 
         $name   = $post['name'];
-        $phone   = trim($post['phone']);
+        $phone   = $this->cleanPhoneNumber($post['phone']);
 
         Number::create(['name' => $name, 'phone_number' => $phone]);
 
@@ -58,7 +62,7 @@ class NumberController extends Controller
         $route = $response->withRedirect($this->router->pathFor('admin.numbers.index'));
 
         $name   = $post['name'];
-        $phone   = trim($post['phone']);
+        $phone   = $this->cleanPhoneNumber($post['phone']);
 
         $number = Number::findOrFail($id);
 
@@ -98,8 +102,7 @@ class NumberController extends Controller
 
         if ($extension === self::SUPPORTED_FILES[0]) {
             $rows = SimpleXLSX::parse($filepath)->rows();
-        }
-        else {
+        } else {
             $rows = SimpleCSV::import($filename);
         }
 

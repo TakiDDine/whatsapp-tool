@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+	<head>
+		<!-- Page title -->
+		<title> {{l.navbar.1}}
+		</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link
+		href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+		<!-- meta -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta
+		name="description" content="لوحة التحكم">
+
+		<!-- check for javascript -->
+		<noscript>
+			<meta http-equiv="refresh" content="0; url=http://www.google.com"/>
+		</noscript>
+
+		<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.ltr.css"/>
+		<link rel="stylesheet" href="/vendor/highlight.js/styles/github.css"/>
+		<link rel="stylesheet" href="/vendor/simplebar/simplebar.min.css"/>
+		<link rel="stylesheet" href="/vendor/quill/quill.snow.css"/>
+		<link rel="stylesheet" href="/vendor/air-datepicker/css/datepicker.min.css"/>
+		<link rel="stylesheet" href="/vendor/select2/css/select2.min.css"/>
+		<link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap5.min.css"/>
+		<link rel="stylesheet" href="/vendor/nouislider/nouislider.min.css"/>
+		<link rel="stylesheet" href="/vendor/fullcalendar/main.min.css"/>
+		<link rel="stylesheet" href="/css/style.css"/>
+		<link rel="stylesheet" href="/css/custom_style.css"/>
+	</head>
+
+	<body class="login-container">
+		<div class="min-h-100 p-0 p-sm-6 d-flex align-items-stretch">
+			<div class="card w-25x flex-grow-1 flex-sm-grow-0 m-sm-auto">
+				<div class="card-body p-sm-5 m-sm-3 flex-grow-0">
+					<form method="POST" action="{{ path_for('login') }}" id="LoginForm" autocomplete="off">
+						<h1 class="mb-0 fs-2 text-center mb-5"> {{l.Auau.2}}
+						</h1>
+						{% include "admin/elements/flash.twig" %}
+						<div class="mb-4">
+							<input type="text" class="form-control form-control-lg" required placeholder="{{l.Auau.0}}" autofocus name="user_login"/>
+						</div>
+						<div class="mb-4">
+							<input type="password" class="form-control form-control-lg" requierd placeholder="{{l.Auau.9}}" name="pass_login"/>
+						</div>
+						<div>
+							<button type="submit" class="btn btn-primary btn-lg w-100"> {{l.Auau.10}}
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -19,6 +19,9 @@ $app->post('/login[/]', auth::class . ':login')->setName('login');
 $app->get('/logout[/]', auth::class . ':logout')->setName('logout')->add(new logout($container));
 
 $app->group('/admin', function ($container) use ($app) {
+
+    $this->get('[/]', 'Data:adminIndex')->setName('admin.index')->add(new App\Middleware\adminMiddleware($container));
+
     // Numbers
     $this->get('/numbers', 'Number:index')->setName('admin.numbers.index');
     $this->get('/numbers/create', 'Number:create')->setName('admin.numbers.create');
@@ -27,7 +30,6 @@ $app->group('/admin', function ($container) use ($app) {
     $this->post('/numbers/{id}/update', 'Number:update')->setName('admin.numbers.update');
     $this->post('/numbers/{id}/delete', 'Number:delete')->setName('admin.numbers.delete');
     $this->post('/numbers/upload', 'Number:upload')->setName('admin.numbers.upload');
-
 
     // Groups
     $this->get('/groups', 'Group:index')->setName('admin.groups.index');
