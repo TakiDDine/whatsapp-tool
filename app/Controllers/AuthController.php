@@ -78,6 +78,6 @@ class AuthController extends Controller
         //clear session from disk
         session_destroy();
 
-        return $response->withRedirect($this->container->router->pathFor('admin.index'));
+        return $response->withRedirect('/');
     }
 }

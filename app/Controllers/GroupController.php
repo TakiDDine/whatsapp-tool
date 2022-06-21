@@ -136,8 +136,8 @@ class GroupController extends Controller
         // Get the group
         $group = Group::with('groupNumbers', 'groupNumbers.phone')->findOrFail($args['id']);
 
-        $ultramsg_token = "gz09ablfo1mrl5yi"; // Ultramsg.com token
-        $instance_id = "instance9214"; // Ultramsg.com instance id
+        $ultramsg_token = "bh1p6r44gb0bendu"; // Ultramsg.com token
+        $instance_id = "instance9871"; // Ultramsg.com instance id
         $client = new \UltraMsg\WhatsAppApi($ultramsg_token, $instance_id);
 
         $group->groupNumbers->map(function ($group) use ($client, $message) {
